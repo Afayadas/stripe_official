@@ -17,23 +17,8 @@ jobs:
     name: PHP-CS-Fixer
     runs-on: ubuntu-latest
     steps:
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '5.6'
-
       - name: Checkout
         uses: actions/checkout@v2.0.0
 
-      # Add vendor folder in cache to make next builds faster
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: vendor
-          key: php-${{ hashFiles('composer.lock') }}
-
-      - name: Install dependencies
-        run: composer install
-
       - name: Run PHP-CS-Fixer
-        run: ./vendor/bin/php-cs-fixer fix --dry-run --diff --using-cache=no --diff-format udiff
+        uses: prestashopcorp/github-action-php-cs-fixer@master
